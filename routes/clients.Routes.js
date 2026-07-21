@@ -2,8 +2,8 @@ import express from "express";
 import * as controller from "../controllers/clientsController.js";
 const router = express.Router();
 router.get("/", controller.getClients);
-router.get('/new', controller.createClient);
-router.post('/update', controller.updateClient);
-router.post('/delete', controller.deleteClient);
+router.post('/new', controller.createClient);
+router.put('/update/:_id', controller.updateClient);
+router.delete('/delete/:_id', controller.deleteClient);
 
 export default router;
