@@ -14,13 +14,46 @@ export const createClient = async (req, res) => {
 };
 
 export const updateClient = async (req, res) => {
-  const client = await Client.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-  res.json(client);
+  try {
+    console.log("ID:", req.params._id);
+    console.log("Body:", req.body);
+   /*  const existe = await Client.findById(req.params._id);
+    console.log(existe); */
+
+    const client = await Client.findByIdAndUpdate(req.params._id, req.body, {
+      returnDocument: "after",
+    });
+    if (!client) {
+      return res.status(404).json({
+        message: "Cliente no encontrado",
+      });
+    }
+
+    res.json(client);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };
 
 export const deleteClient = async (req, res) => {
-  await Client.findByIdAndDelete(req.params.id);
-  res.sendStatus(204);
+  try {
+    const client = await Client.findByIdAndDelete(req.params._id);
+
+    if (!client) {
+      return res.status(404).json({
+        message: "Cliente no encontrado",
+      });
+    }
+
+    res.json({
+      message: "Cliente eliminado correctamente",
+      client,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };
