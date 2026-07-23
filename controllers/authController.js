@@ -26,7 +26,7 @@ export const login = async (req, res) => {
         role: user.role,
       },
 
-      "mundial2026",
+      "Mundial2026",
       {
         expiresIn: "1h",
       },
